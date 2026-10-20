@@ -1,4 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
+import os from "os";
 import {
   normalizePath,
   expandHome,
@@ -242,6 +243,13 @@ describe("Path Utilities", () => {
       const result = expandHome("~");
       expect(result).not.toContain("~");
       expect(result.length).toBeGreaterThan(0);
+    });
+
+    it("expands ~\\ using the Windows backslash separator (issue #5180)", () => {
+      const result = expandHome("~\\test");
+      expect(result).toContain("test");
+      expect(result).not.toContain("~");
+      expect(result.startsWith(os.homedir())).toBe(true);
     });
 
     it("leaves other paths unchanged", () => {

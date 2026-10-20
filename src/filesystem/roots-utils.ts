@@ -16,7 +16,7 @@ async function parseRootUri(rootUri: string): Promise<string | null> {
       ? fileURLToPath(rootUri)
       : rootUri;
     const expandedPath =
-      rawPath.startsWith("~/") || rawPath === "~"
+      rawPath.startsWith("~/") || rawPath.startsWith("~\\") || rawPath === "~"
         ? path.join(os.homedir(), rawPath.slice(1))
         : rawPath;
     const absolutePath = path.resolve(expandedPath);
